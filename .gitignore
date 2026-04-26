@@ -4,3 +4,4 @@ __pycache__
 
 #ficheiros a ignorar
 datafile.py
+.DS_Store
