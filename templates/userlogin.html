@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="card">
+    <div class="card-header">
+      <h1>Userlogin</h1>
+      <span class="badge">id {{ uid }}</span>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn" {{ butshow }}
+              onclick="window.location.href='/Userlogin?option=edit'">Edit</button>
+      {% if group == "admin" %}
+      <button class="btn btn-danger" {{ butshow }}
+              onclick="window.location.href='/Userlogin?option=delete'">Delete</button>
+      <button class="btn" {{ butshow }}
+              onclick="window.location.href='/Userlogin?option=insert'">Insert</button>
+      {% endif %}
+      <button class="btn btn-success" type="submit" form="form" {{ butedit }}>Save</button>
+      <button class="btn btn-outline" {{ butedit }}
+              onclick="window.location.href='/Userlogin?option=cancel'">Cancel</button>
+      <button class="btn btn-outline"
+              onclick="window.location.href='/Userlogin?option=exit'">Exit</button>
+    </div>
+
+    <form id="form" action="/Userlogin?option=save" method="post">
+      <div class="card-body">
+        <div class="field">
+          <label for="uid">Id:</label>
+          <input type="text" disabled id="uid" name="id" value="{{ uid }}" size="6">
+        </div>
+        {% if group == "admin" %}
+          <div class="field">
+            <label for="user">User:</label>
+            <input {{ butedit }} type="text" id="user" name="user" value="{{ user }}">
+          </div>
+          <div class="field">
+            <label for="usergroup">Group:</label>
+            <input {{ butedit }} type="text" id="usergroup" name="usergroup" value="{{ usergroup }}">
+          </div>
+        {% else %}
+          <div class="field">
+            <label>User:</label>
+            <input type="text" disabled value="{{ user }}">
+          </div>
+          <div class="field">
+            <label>Group:</label>
+            <input type="text" disabled value="{{ usergroup }}">
+          </div>
+        {% endif %}
+        <div class="field">
+          <label for="password">Password:</label>
+          <input {{ butedit }} type="password" id="password" name="password"
+                 placeholder="nova password">
+        </div>
+      </div>
+    </form>
+
+    {% if group == "admin" %}
+    <div class="nav-group">
+      <button class="btn"
+              onclick="window.location.href='/Userlogin?option=first'">First</button>
+      <button class="btn"
+              onclick="window.location.href='/Userlogin?option=previous'">Previous</button>
+      <button class="btn"
+              onclick="window.location.href='/Userlogin?option=next'">Next</button>
+      <button class="btn"
+              onclick="window.location.href='/Userlogin?option=last'">Last</button>
+    </div>
+    {% endif %}
+
+    {% if msg %}
+    <div style="padding:0.5rem 1rem;color:#2a7a2a;font-size:0.85rem;">{{ msg }}</div>
+    {% endif %}
+  </div>
+
+  <!-- Full users table (admin only) -->
+  {% if group == "admin" %}
+  <div class="section-title">All users ({{ all_users|length }})</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>User</th>
+          <th>Group</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in all_users %}
+        <tr {% if u.uid == uid %}class="selected"{% endif %}>
+          <td>{{ u.uid }}</td>
+          <td>{{ u.user }}</td>
+          <td>{{ u.usergroup }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
