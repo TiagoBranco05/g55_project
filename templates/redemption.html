@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="card">
+
+    <div class="card-header">
+      <h1>Redemption</h1>
+      <span class="badge">id {{ redemption_id }}</span>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-default" {{ butshow }}
+              onclick="window.location.href='/redemption?option=edit'">Edit</button>
+      <button class="btn btn-danger"  {{ butshow }}
+              onclick="window.location.href='/redemption?option=delete'">Delete</button>
+      <button class="btn btn-default" {{ butshow }}
+              onclick="window.location.href='/redemption?option=insert'">Insert</button>
+      <button class="btn btn-success" type="submit" form="form" {{ butedit }}>Save</button>
+      <button class="btn btn-outline" {{ butedit }}
+              onclick="window.location.href='/redemption?option=cancel'">Cancel</button>
+      <button class="btn btn-outline"
+              onclick="window.location.href='/redemption?option=exit'">Exit</button>
+    </div>
+
+    <form id="form" action="/redemption?option=save" method="post">
+      <div class="card-body">
+
+        <div class="field">
+          <label for="redemption_id">Id:</label>
+          {% if butedit == 'enabled' %}
+            <input type="text" disabled id="redemption_id" name="redemption_id"
+                   value="{{ redemption_id }}" size="10">
+          {% else %}
+            <input type="text" id="redemption_id" name="redemption_id"
+                   value="{{ redemption_id }}" size="10">
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="redemption_date">Date:</label>
+          <input {{ butedit }} type="text" id="redemption_date" name="redemption_date"
+                 value="{{ redemption_date }}" size="12" placeholder="YYYY-MM-DD">
+        </div>
+
+        <div class="field">
+          <label for="passenger_id">Passenger Id:</label>
+          <input {{ butedit }} type="text" id="passenger_id" name="passenger_id"
+                 value="{{ passenger_id }}" size="10">
+        </div>
+
+        <div class="field">
+          <label for="miles_used">Miles Used:</label>
+          <input {{ butedit }} type="text" id="miles_used" name="miles_used"
+                 value="{{ miles_used }}" size="10">
+        </div>
+
+        <div class="field">
+          <label for="promotion_id">Promotion:</label>
+          {% if butedit == 'enabled' %}
+            <select id="promotion_id" name="promotion_id">
+              {% for p in promotions %}
+              <option value="{{ p.promotion_id }}"
+                {% if p.promotion_id == promotion_id %}selected{% endif %}>
+                {{ p.promotion_id }} — {{ p.name }}
+              </option>
+              {% endfor %}
+            </select>
+          {% else %}
+            <input type="text" disabled value="{{ promotion_id }}" size="10">
+          {% endif %}
+        </div>
+
+      </div>
+    </form>
+
+    <div class="nav-group">
+      <button class="btn btn-nav"
+              onclick="window.location.href='/redemption?option=first'">First</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/redemption?option=previous'">Previous</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/redemption?option=next'">Next</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/redemption?option=last'">Last</button>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
