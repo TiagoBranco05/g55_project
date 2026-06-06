@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="card">
+
+    <div class="card-header">
+      <h1>Reward</h1>
+      <span class="badge">id {{ reward_id }}</span>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-default" {{ butshow }}
+              onclick="window.location.href='/reward?option=edit'">Edit</button>
+      <button class="btn btn-danger"  {{ butshow }}
+              onclick="window.location.href='/reward?option=delete'">Delete</button>
+      <button class="btn btn-default" {{ butshow }}
+              onclick="window.location.href='/reward?option=insert'">Insert</button>
+      <button class="btn btn-success" type="submit" form="form" {{ butedit }}>Save</button>
+      <button class="btn btn-outline" {{ butedit }}
+              onclick="window.location.href='/reward?option=cancel'">Cancel</button>
+      <button class="btn btn-outline"
+              onclick="window.location.href='/reward?option=exit'">Exit</button>
+    </div>
+
+    <form id="form" action="/reward?option=save" method="post">
+      <div class="card-body">
+
+        <div class="field">
+          <label for="reward_id">Id:</label>
+          {% if butedit == 'enabled' %}
+            <input type="text" disabled id="reward_id" name="reward_id"
+                   value="{{ reward_id }}" size="10">
+          {% else %}
+            <input type="text" id="reward_id" name="reward_id"
+                   value="{{ reward_id }}" size="10">
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="name">Name:</label>
+          <input {{ butedit }} type="text" id="name" name="name"
+                 value="{{ name }}" size="40">
+        </div>
+
+        <div class="field">
+          <label for="expiry_days">Expiry (days):</label>
+          <input {{ butedit }} type="text" id="expiry_days" name="expiry_days"
+                 value="{{ expiry_days }}" size="10">
+        </div>
+
+      </div>
+    </form>
+
+    <div class="nav-group">
+      <button class="btn btn-nav"
+              onclick="window.location.href='/reward?option=first'">First</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/reward?option=previous'">Previous</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/reward?option=next'">Next</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/reward?option=last'">Last</button>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width:1300px; margin:1.5rem auto; padding:0 1rem;">
+  <div class="section-title" style="margin-top:0;">Data Analysis — Interactive Dashboard (Plotly)</div>
+  <div style="margin:0.75rem 0; font-size:0.82rem; color:#555;">
+    Click and drag to zoom &nbsp;|&nbsp; Double-click to reset &nbsp;|&nbsp; Hover for details &nbsp;|&nbsp; Click legend to toggle
+  </div>
+  <div>{{ plot_div | safe }}</div>
+  <div style="text-align:center; margin-top:0.75rem;">
+    <a class="btn" href="/">Back</a>
+  </div>
+</div>
+{% endblock %}
