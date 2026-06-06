@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="home-title">
+    <h1>Airline Loyalty Program</h1>
+    <p>Grupo 55 — Gestão de promoções de companhias aéreas</p>
+  </div>
+  {% if ulogin %}
+  <div class="home-grid">
+    <a class="home-card" href="/gform/Airline">
+      <div class="hc-title">Airlines</div>
+      <div class="hc-count">{{ n_airlines }}</div>
+      <div class="hc-desc">Companhias aéreas</div>
+    </a>
+    <a class="home-card" href="/gform/Promotion">
+      <div class="hc-title">Promotions</div>
+      <div class="hc-count">{{ n_promotions }}</div>
+      <div class="hc-desc">Promocoes disponiveis</div>
+    </a>
+    <a class="home-card" href="/gform/Reward">
+      <div class="hc-title">Rewards</div>
+      <div class="hc-count">{{ n_rewards }}</div>
+      <div class="hc-desc">Recompensas</div>
+    </a>
+    <a class="home-card" href="/gform/Redemption">
+      <div class="hc-title">Redemptions</div>
+      <div class="hc-count">{{ n_redemptions }}</div>
+      <div class="hc-desc">Resgates de passageiros</div>
+    </a>
+  </div>
+  {% else %}
+  <p style="text-align:center;margin-top:2rem;">
+    <a href="/login">Login</a> para aceder.
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

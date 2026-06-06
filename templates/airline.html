@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="card">
+
+    <div class="card-header">
+      <h1>✈ Airline</h1>
+      <span class="badge">id {{ airline_id }}</span>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="btn-group">
+      <button class="btn btn-default" {{ butshow }}
+              onclick="window.location.href='/airline?option=edit'">Edit</button>
+      <button class="btn btn-danger"  {{ butshow }}
+              onclick="window.location.href='/airline?option=delete'">Delete</button>
+      <button class="btn btn-default" {{ butshow }}
+              onclick="window.location.href='/airline?option=insert'">Insert</button>
+      <button class="btn btn-success" type="submit" form="form" {{ butedit }}>Save</button>
+      <button class="btn btn-outline" {{ butedit }}
+              onclick="window.location.href='/airline?option=cancel'">Cancel</button>
+      <button class="btn btn-outline"
+              onclick="window.location.href='/airline?option=exit'">Exit</button>
+    </div>
+
+    <!-- Form -->
+    <form id="form" action="/airline?option=save" method="post">
+      <div class="card-body">
+
+        <div class="field">
+          <label for="airline_id">Id:</label>
+          {% if butedit == 'enabled' %}
+            <input type="text" disabled id="airline_id" name="airline_id"
+                   value="{{ airline_id }}" size="10">
+          {% else %}
+            <input type="text" id="airline_id" name="airline_id"
+                   value="{{ airline_id }}" size="10">
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="name">Name:</label>
+          <input {{ butedit }} type="text" id="name" name="name"
+                 value="{{ name }}" size="40">
+        </div>
+
+        <div class="field">
+          <label for="created_date">Founded:</label>
+          <input {{ butedit }} type="text" id="created_date" name="created_date"
+                 value="{{ created_date }}" size="12" placeholder="YYYY-MM-DD">
+        </div>
+
+      </div>
+    </form>
+
+    <!-- Navigation buttons -->
+    <div class="nav-group">
+      <button class="btn btn-nav"
+              onclick="window.location.href='/airline?option=first'">First</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/airline?option=previous'">Previous</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/airline?option=next'">Next</button>
+      <button class="btn btn-nav"
+              onclick="window.location.href='/airline?option=last'">Last</button>
+    </div>
+
+    <!-- Related promotions -->
+    {% if promotions %}
+    <div class="related">
+      <h3>Promotions ({{ promotions|length }})</h3>
+      <ul class="related-list">
+        {% for p in promotions %}
+        <li>{{ p.name }} — {{ p.min_miles }} miles</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

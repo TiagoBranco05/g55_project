@@ -9,7 +9,7 @@ class Promotion(Gclass):
     lst  = list()
     pos  = 0
     path = ''
-    att  = ['promotion_id', 'name', 'min_miles', 'comments', 'reward_id']  # CORRIGIDO: sem underscores
+    att  = ['promotion_id', 'name', 'min_miles', 'comments', 'reward_id']
 
     def __init__(self, promotion_id, name, min_miles, comments, reward_id):
         super().__init__()

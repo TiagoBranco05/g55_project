@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>G55 Airline Loyalty</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+<nav>
+  <a class="brand" href="/">G55 Loyalty</a>
+  {% if ulogin == None %}
+    <a href="/login">Login</a>
+  {% else %}
+    <a href="/logoff">Logoff</a>
+    <a href="/gform/Airline"    {% if '/gform/Airline'    in request.path %}class="active"{% endif %}>Airlines</a>
+    <a href="/gform/Promotion"  {% if '/gform/Promotion'  in request.path %}class="active"{% endif %}>Promotions</a>
+    <a href="/gform/Reward"     {% if '/gform/Reward'     in request.path %}class="active"{% endif %}>Rewards</a>
+    <a href="/gform/Redemption" {% if '/gform/Redemption' in request.path %}class="active"{% endif %}>Redemptions</a>
+    <a href="/plot"   {% if request.path=='/plot'   %}class="active"{% endif %}>Plot</a>
+    <a href="/plotly" {% if request.path=='/plotly' %}class="active"{% endif %}>Plotly</a>
+    <a href="/Userlogin" {% if request.path=='/Userlogin' %}class="active"{% endif %}>Users</a>
+    <span class="nav-user">User: {{ ulogin }}</span>
+  {% endif %}
+</nav>
+{% block content %}{% endblock %}
+</body>
+</html>
