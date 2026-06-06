@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+
+  <div class="card">
+    <div class="card-header">
+      <h1>{{ cname }}</h1>
+      <span class="badge">id {{ fields[att[0]] }}</span>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn" {{ butshow }}
+              onclick="window.location.href='/gform/{{ cname }}?option=edit'">Edit</button>
+      <button class="btn btn-danger" {{ butshow }}
+              onclick="window.location.href='/gform/{{ cname }}?option=delete'">Delete</button>
+      <button class="btn" {{ butshow }}
+              onclick="window.location.href='/gform/{{ cname }}?option=insert'">Insert</button>
+      <button class="btn btn-success" type="submit" form="form" {{ butedit }}>Save</button>
+      <button class="btn btn-outline" {{ butedit }}
+              onclick="window.location.href='/gform/{{ cname }}?option=cancel'">Cancel</button>
+      <button class="btn btn-outline"
+              onclick="window.location.href='/gform/{{ cname }}?option=exit'">Exit</button>
+    </div>
+
+    {% if form_error %}
+    <div style="padding:0.4rem 1rem;background:#fdd;color:#a33;font-size:0.85rem;border-bottom:1px solid #bbb;">
+      {{ form_error }}
+    </div>
+    {% endif %}
+
+    <form id="form" action="/gform/{{ cname }}?option=save" method="post">
+      <div class="card-body">
+        {% for field in att %}
+        <div class="field">
+          <label for="{{ field }}">{{ field | replace('_', ' ') | title }}:</label>
+          {% if loop.first %}
+            <input type="text" disabled id="{{ field }}" name="{{ field }}"
+                   value="{{ fields[field] }}" size="10">
+          {% elif field in fk_options %}
+            {% if butedit == 'enabled' %}
+              <select id="{{ field }}" name="{{ field }}">
+                {% for fk_id, fk_label in fk_options[field] %}
+                <option value="{{ fk_id }}"
+                  {% if fk_id|string == fields[field]|string %}selected{% endif %}>
+                  {{ fk_id }} — {{ fk_label }}
+                </option>
+                {% endfor %}
+              </select>
+            {% else %}
+              <input type="text" disabled value="{{ fields[field] }}">
+            {% endif %}
+          {% elif 'date' in field %}
+            <input {{ butedit }} type="text" id="{{ field }}" name="{{ field }}"
+                   value="{{ fields[field] }}" placeholder="YYYY-MM-DD">
+          {% else %}
+            <input {{ butedit }} type="text" id="{{ field }}" name="{{ field }}"
+                   value="{{ fields[field] }}">
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </form>
+
+    <div class="nav-group">
+      <button class="btn"
+              onclick="window.location.href='/gform/{{ cname }}?option=first'">First</button>
+      <button class="btn"
+              onclick="window.location.href='/gform/{{ cname }}?option=previous'">Previous</button>
+      <button class="btn"
+              onclick="window.location.href='/gform/{{ cname }}?option=next'">Next</button>
+      <button class="btn"
+              onclick="window.location.href='/gform/{{ cname }}?option=last'">Last</button>
+    </div>
+  </div>
+
+  <div class="section-title">All {{ cname }} records ({{ all_records|length }})</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          {% for field in att %}
+          <th>{{ field | replace('_', ' ') | title }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in all_records %}
+        <tr {% if row[att[0]]|string == fields[att[0]]|string %}class="selected"{% endif %}>
+          {% for field in att %}
+          <td>{{ row[field] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
